@@ -4,7 +4,6 @@ package com.cherohn.ecommerce_api.dto.request;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import jakarta.validation.*;
 
 @Getter
 @Builder
