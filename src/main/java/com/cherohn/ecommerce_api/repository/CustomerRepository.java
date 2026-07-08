@@ -24,14 +24,14 @@ public interface CustomerRepository extends JpaRepository<Order, Long> {
                 JOIN oi.product p
                 GROUP BY p.id, p.name
                 ORDER BY SUM(oi.quantity) DESC
-                """)
+        """)
     List<TopProductResponse> findTopSellingProducts(Pageable pageable);
 
     @Query("""
             SELECT new com.cherohn.ecommerce_api.dto.response.RevenueAggregate(COUNT(o), COALESCE(SUM(o.totalAmount), 0))
-            FROM Order o
-            WHERE o.status = :status
-            AND o.createdAt BETWEEN :startDateTime AND :endDateTime
+                FROM Order o
+                WHERE o.status = :status
+                AND o.createdAt BETWEEN :startDateTime AND :endDateTime
             """)
     RevenueAggregate getRevenueAggregate(
             @Param("status") OrderStatus status,
