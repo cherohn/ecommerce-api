@@ -30,10 +30,8 @@ public class OrderService {
 
     private static final Map<OrderStatus, Set<OrderStatus>> ALLOWED_TRANSITIONS
             = Map.of(
-            OrderStatus.PENDING, Set.of(OrderStatus.CONFIRMED,
-                    OrderStatus.CANCELLED),
-            OrderStatus.CONFIRMED, Set.of(OrderStatus.SHIPPED,
-                    OrderStatus.CANCELLED),
+            OrderStatus.PENDING, Set.of(OrderStatus.CONFIRMED, OrderStatus.CANCELLED),
+            OrderStatus.CONFIRMED, Set.of(OrderStatus.SHIPPED, OrderStatus.CANCELLED),
             OrderStatus.SHIPPED, Set.of(OrderStatus.DELIVERED),
             OrderStatus.DELIVERED, Set.of(),
             OrderStatus.CANCELLED, Set.of()
