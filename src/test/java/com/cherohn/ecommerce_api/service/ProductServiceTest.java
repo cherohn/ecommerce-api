@@ -45,58 +45,57 @@ class ProductServiceTest {
                 .active(true)
                 .category(category)
                 .build();
-        @Nested
-        @DisplayName("Testes de remoção de estoque")
-        class RemoveStockTests {
+    }   // ← ESSA CHAVE ESTAVA FALTANDO AQUI
 
-            @Test
-            @DisplayName("Deve lançar InsufficientStockException quando quantidadesolicitada é maior que o estoque")
-            void deveLancarExcecaoQuandoEstoqueInsuficiente() {
-                when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-                assertThrows(InsufficientStockException.class, () -> {productService.removeStock(1L, 20);});
-                verify(productRepository, never()).save(any(Product.class));
+    @Nested
+    @DisplayName("Testes de remoção de estoque")
+    class RemoveStockTests {
 
-            }
-
-            @Test
-            @DisplayName("Deve decrementar estoque corretamente quando quantidade é válida")
-            void deveDecrementarEstoqueQuandoQuantidadeValida() {
-                when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-                when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
-                productService.removeStock(1L, 4);
-                assertEquals(6, product.getStockQuantity());
-
-            }
+        @Test
+        @DisplayName("Deve lançar InsufficientStockException quando quantidade solicitada é maior que o estoque")
+        void deveLancarExcecaoQuandoEstoqueInsuficiente() {
+            when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+            assertThrows(InsufficientStockException.class, () -> {
+                productService.removeStock(1L, 20);
+            });
+            verify(productRepository, never()).save(any(Product.class));
         }
 
-        @Nested
-        @DisplayName("Testes de desativação de produto")
-        class DeactivateTests {
-
-            @Test
-            @DisplayName("Deve lançar ResourceNotFoundException ao desativar produto inexistente")
-            void deveLancarExcecaoQuandoProdutoNaoExiste() {
-                when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
-                assertThrows(ResourceNotFoundException.class, () -> {
-                    productService.deactivateProduct(99L);
-
-                });
-            }
+        @Test
+        @DisplayName("Deve decrementar estoque corretamente quando quantidade é válida")
+        void deveDecrementarEstoqueQuandoQuantidadeValida() {
+            when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+            when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
+            productService.removeStock(1L, 4);
+            assertEquals(6, product.getStockQuantity());
         }
+    }
 
-        @Nested
-        @DisplayName("Testes de adição de estoque")
-        class AddStockTests {
+    @Nested
+    @DisplayName("Testes de desativação de produto")
+    class DeactivateTests {
 
-            @Test
-            @DisplayName("Deve incrementar o campo stockQuantity corretamente")
-            void deveIncrementarEstoqueCorretamente() {
-                when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-                when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
-                productService.addStock(1L, 15);
-                assertEquals(25, product.getStockQuantity());
+        @Test
+        @DisplayName("Deve lançar ResourceNotFoundException ao desativar produto inexistente")
+        void deveLancarExcecaoQuandoProdutoNaoExiste() {
+            when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
+            assertThrows(ResourceNotFoundException.class, () -> {
+                productService.deactivateProduct(99L);
+            });
+        }
+    }
 
-            }
+    @Nested
+    @DisplayName("Testes de adição de estoque")
+    class AddStockTests {
+
+        @Test
+        @DisplayName("Deve incrementar o campo stockQuantity corretamente")
+        void deveIncrementarEstoqueCorretamente() {
+            when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+            when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
+            productService.addStock(1L, 15);
+            assertEquals(25, product.getStockQuantity());
         }
     }
 }
