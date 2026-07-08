@@ -3,7 +3,7 @@
 API REST completa de e-commerce com controle transacional de estoque, máquina de estados para pedidos, relatórios agregados e cache distribuído com Redis — construída para ser tão correta em concorrência quanto em regra de negócio.
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-brightgreen?logo=springboot)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4-brightgreen?logo=springboot)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-7-red?logo=redis&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
