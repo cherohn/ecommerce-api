@@ -60,14 +60,12 @@ class OrderServiceTest {
         void deveCriarPedidoEDecrementarEstoque() {
             CreateOrderRequest request = CreateOrderRequest.builder()
                     .customerId(1L)
-                    .items(List.of())
+                    .items(List.of(OrderItemRequest.builder().productId(1L).quantity(3).build()))
                     .build();
             when(customerService.getById(1L)).thenReturn(customer);
             when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-            when(productRepository.save(any(Product.class))).thenAnswer(inv ->
-                    inv.getArgument(0));
-            when(orderRepository.save(any(Order.class))).thenAnswer(inv ->
-                    inv.getArgument(0));
+            when(productRepository.save(any(Product.class))).thenAnswer(inv -> inv.getArgument(0));
+            when(orderRepository.save(any(Order.class))).thenAnswer(inv -> inv.getArgument(0));
             orderService.createOrder(request);
             assertEquals(7, product.getStockQuantity());
             verify(orderRepository, times(1)).save(any(Order.class));
@@ -80,7 +78,7 @@ class OrderServiceTest {
 
             CreateOrderRequest request = CreateOrderRequest.builder()
                     .customerId(1L)
-                    .items(List.of())
+                    .items(List.of(OrderItemRequest.builder().productId(1L).quantity(999).build()))
                     .build();
             when(customerService.getById(1L)).thenReturn(customer);
             when(productRepository.findById(1L)).thenReturn(Optional.of(product));
