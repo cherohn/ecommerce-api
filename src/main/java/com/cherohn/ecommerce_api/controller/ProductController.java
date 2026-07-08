@@ -60,7 +60,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.addStock(id, request.getQuantity()));
     }
 
-    @PatchMapping("/{id]/stock/remove")
+    @PatchMapping("/{id}/stock/remove")
     public ResponseEntity<ProductResponse> removeStock(@PathVariable Long id, @RequestBody StockAdjustmentRequest request){
         return ResponseEntity.ok(productService.removeStock(id, request.getQuantity()));
     }
